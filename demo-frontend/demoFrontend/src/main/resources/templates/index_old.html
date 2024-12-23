@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Shopping Items</title>
+</head>
+<body>
+<h1>Shopping List</h1>
+
+<!-- Display Items -->
+<div th:if="${items}">
+    <ul>
+        <li th:each="item : ${items}">
+            <b th:text="${item.name}"></b>: 
+            <span th:text="${item.amount}"></span>
+        </li>
+    </ul>
+</div>
+
+<!-- Error Handling -->
+<div th:if="${error}">
+    <p th:text="${error}" style="color: red;"></p>
+</div>
+
+<!-- Add New Item Form -->
+<form method="post" action="/add">
+    <label for="name">Name: </label>
+    <input type="text" name="name" required>
+    <label for="amount">Amount: </label>
+    <input type="number" name="amount" required>
+    <button type="submit">Add</button>
+</form>
+
+<!-- Response Message -->
+<div th:if="${message}">
+    <p th:text="${message}" style="color: green;"></p>
+</div>
+</body>
+</html>

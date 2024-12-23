@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Shopping List</title>
+</head>
+<body>
+<h1>Shopping List</h1>
+
+<!-- Show items -->
+<div th:if="${items}">
+    <ul>
+        <li th:each="item : ${items}">
+            <b th:text="${item.name}"></b>: 
+            <span th:text="${item.amount}"></span>
+
+            <!-- Update Item Form -->
+            <form method="post" action="/update" style="display: inline;">
+                <input type="hidden" name="name" th:value="${item.name}">
+                <label for="amount">Amount: </label>
+                <input type="number" name="amount" min="1" required>
+                <button type="submit">Update</button>
+            </form>
+
+            <!-- Delete Item Form -->
+            <form method="post" action="/delete" style="display: inline;">
+                <input type="hidden" name="name" th:value="${item.name}">
+                <button type="submit" style="color: red;">Delete</button>
+            </form>
+        </li>
+    </ul>
+</div>
+
+<!-- Add New Item Form -->
+<h2>Add New Item</h2>
+<form method="post" action="/add">
+    <label for="name">Name: </label>
+    <input type="text" name="name" required>
+    <label for="amount">Amount: </label>
+    <input type="number" name="amount" min="1" required>
+    <button type="submit">Add</button>
+</form>
+
+</body>
+</html>

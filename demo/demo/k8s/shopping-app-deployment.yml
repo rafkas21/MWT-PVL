@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopping-app
+  labels:
+    app: shopping-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: shopping-app
+  template:
+    metadata:
+      labels:
+        app: shopping-app
+    spec:
+      containers:
+      - name: shopping-app
+        image: your_dockerhub_user/shopping-app:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "default"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopping-app-service
+spec:
+  selector:
+    app: shopping-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
