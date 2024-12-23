@@ -30,6 +30,25 @@ public class ShoppingItemController {
         return "index";
     }
 
+    @GetMapping("/search")
+    public String searchItem(@RequestParam String name, Model model) {
+        // Fetch all items to ensure the shopping list is always displayed
+        ResponseEntity<ShoppingItem[]> allItemsResponse = restTemplate.getForEntity(BACKEND_URL, ShoppingItem[].class);
+        model.addAttribute("items", allItemsResponse.getBody());
+    
+        // Fetch the searched item
+        String url = BACKEND_URL + "/" + name;
+        try {
+            ResponseEntity<ShoppingItem> response = restTemplate.getForEntity(url, ShoppingItem.class);
+            model.addAttribute("searchResult", response.getBody());
+        } catch (Exception e) {
+            model.addAttribute("error", "Item not found");
+        }
+    
+        // Return the same page without a redirect to preserve the search result
+        return "index";
+    }
+
     @PostMapping("/add")
     public String addItem(@RequestParam String name, @RequestParam int amount, Model model) {
         ShoppingItem item = new ShoppingItem();

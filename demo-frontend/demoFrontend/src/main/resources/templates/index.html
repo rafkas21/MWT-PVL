@@ -40,5 +40,27 @@
     <button type="submit">Add</button>
 </form>
 
+
+<!-- Search Form -->
+<h2>Search for an Item</h2>
+<form method="get" action="/search">
+    <label for="name">Item Name:</label>
+    <input type="text" name="name" required>
+    <button type="submit">Search</button>
+</form>
+
+<!-- Display Search Result -->
+<div th:if="${searchResult}">
+    <h3>Search Result</h3>
+    <p>
+        <b>Name:</b> <span th:text="${searchResult.name}"></span><br>
+        <b>Amount:</b> <span th:text="${searchResult.amount}"></span>
+    </p>
+</div>
+
+<div th:if="${error}">
+    <p th:text="${error}" style="color: red;"></p>
+</div>
+
 </body>
 </html>
